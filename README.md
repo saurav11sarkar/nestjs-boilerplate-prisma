@@ -216,48 +216,14 @@ mkdir -p /app
 cd /app
 ```
 
-### Step 5 — Create docker-compose.yml on server
+### Step 5 — Create app directory on server
 
 ```bash
-nano /app/docker-compose.yml
+mkdir -p /app
 ```
 
-Paste this (replace `your-dockerhub-username` with your real username):
-
-```yaml
-services:
-  app:
-    image: your-dockerhub-username/nestjs-app:latest
-    container_name: nestjs_app
-    restart: unless-stopped
-    ports:
-      - '${PORT}:${PORT}'
-    env_file:
-      - .env
-    depends_on:
-      redis:
-        condition: service_healthy
-    networks:
-      - app_network
-
-  redis:
-    image: redis:7-alpine
-    container_name: redis
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - app_network
-
-networks:
-  app_network:
-    driver: bridge
-```
-
-Save: press `Ctrl+X` then `Y` then `Enter`
+> You do NOT need to create `.env` or `docker-compose.yml` manually.
+> The CI/CD pipeline writes both files automatically on every deploy from GitHub Secrets.
 
 ### Step 6 — Generate SSH key for GitHub Actions
 

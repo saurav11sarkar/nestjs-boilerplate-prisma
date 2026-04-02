@@ -1,5 +1,6 @@
 services:
   app:
+    image: ${DOCKER_USERNAME}/nestjs-app:latest
     build:
       context: .
       target: production
