@@ -48,5 +48,3 @@ pids
 *.pid
 *.seed
 *.pid.lock
-
-config.bat
